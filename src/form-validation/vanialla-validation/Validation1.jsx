@@ -1,7 +1,8 @@
-import React from 'react'
 import { useState } from 'react'
+import styles from './validation1.module.css'
 
-// it'a simple vanilla validation without any external library where we have handled isloading, errors and 
+
+// it'a simple vanilla validation without any external library, where we have handled isloading, errors 
 
 function Validation1() {
     const [formValues, setFormValues] = useState({
@@ -9,8 +10,8 @@ function Validation1() {
         password: ''
     })
     const [formErrors, setFormErrors] = useState({
-        email: '',
-        password: ''
+        email: false,
+        password: false
     })
     const [isloading, setIsloading] = useState(false)
 
@@ -35,31 +36,41 @@ function Validation1() {
     }
 
     return (
-        <form onSubmit={handleSubmit} style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-            <div>
-                <label htmlFor='email'>Email: </label>
+        <form onSubmit={handleSubmit} className={styles.form__container}>
+            <div className={styles.fieldBlock}>
+                <label htmlFor='email' className={styles.fieldBlock__label}>Email: </label>
                 <input
                     id='email'
                     name='email'
+                    type='text'
+                    className={styles.fieldBlock__input}
                     placeholder='Email'
                     value={formValues?.email}
                     onChange={handleform}
                 />
-                {formErrors?.email && <div style={{color: 'red'}}>Invalid Email</div>}
+                {formErrors?.email && <div className={styles.error}>Error in Email</div>}
             </div>
 
-            <div>
-                <label htmlFor='password'>Password: </label>
+            <div className={styles.fieldBlock}>
+                <label htmlFor='password' className={styles.fieldBlock__label}>Password: </label>
                 <input
                     id='password'
                     name='password'
+                    type='password'
+                    className={styles.fieldBlock__input}
                     value={formValues?.password}
                     onChange={handleform}
                 />
-                {formErrors?.password && <div style={{color: 'red'}}>Invalid Password</div>}
+                {formErrors?.password && <div className={styles.error}>Error in Password</div>}
             </div>
 
-            <button type='submit'>{isloading ? "Loading..." : "Submit"}</button>
+            <button 
+            type='submit'
+            disabled={isloading ? true : false}
+            className={styles.submtbtn}
+            >
+                {isloading ? "Loading..." : "Submit"}
+            </button>
         </form>
     )
 }
